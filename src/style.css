@@ -12,10 +12,18 @@
 }
 
 body {
-  background: #115566
+  background: #115566;
 }
 
 .game .row .card {
   margin-left: 5px;
   margin-top: 5px;
+}
+
+.game-list div {
+  height: 66px;
+}
+
+.pointer {
+  cursor: pointer;
 }
