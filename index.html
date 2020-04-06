@@ -25,14 +25,33 @@
     </div>
   </div>
 
-  <div class="container game">
+  <div class="container row game">
 
-    <div class="row col-md-12 d-flex justify-content-center game-list"></div>
+    <div class="col-md-2">
+      <select name="nivel" class="form-control" id="nivel">
+        <option value="8" selected>Fácil</option>
+        <option value="12">Médio</option>
+        <option value="18">Díficil</option>
+      </select>
+      <spam>
+        <p>
+          <b>Tempo:</b>
+          <span id="time"></span>
+          <br>
+          <b>Pontuação:</b>
+          <span id="pts">0</span> pts
+        </p>
+      </spam>
+    </div>
 
-    <div class="row btn-games d-flex justify-content-center">
+    <div class="row col-md-10 d-flex justify-content-center game-list">
+    </div>
+
+    <div class="row col-md-9 offset-md-3 btn-games d-flex justify-content-center">
       <button type="button" class="btn btn-success" onclick="startGame()" id="btn-start-game">Iniciar</button>
       <button type="button" class="btn btn-danger" onclick="finishGame()" id="btn-finish-game" disabled="true">Encerrar</button>
     </div>
+
   </div>
 
   <footer class="footer">
@@ -46,6 +65,7 @@
   <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+  <script src="https://momentjs.com/downloads/moment.js"></script>
   <script src="src/animais.js"></script>
   <script src="src/main.js"></script>
 </body>

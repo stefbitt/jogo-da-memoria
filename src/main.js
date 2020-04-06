@@ -4,6 +4,7 @@ let hourEnd = null;
 let selectFirstAnimal = null;
 let listaGeral = [];
 let level = 12;
+let ptsGame = 0;
 
 let templateItem = `
 <div class="card col-md-2 pointer" onclick="selectItem('{name}', {rowId})" id="{name}-{rowId}">
@@ -12,22 +13,54 @@ let templateItem = `
   </div>
 </div>`;
 
-startGame();
+function updateHora() {
+  setTimeout(() => {
+    if (isStart) {
+      let ms = Date.now() - hourStart;
+      segundos = Math.trunc((ms / 1000) % 60);
+      minutos = Math.trunc((ms / 60000) % 60);
+      horas = Math.trunc(ms / 3600000);
+      $('#time').html(`${horas}:${minutos}:${segundos}`);
+      decrementPts(1)
+      $('#pts').html(ptsGame > 0 ? ptsGame : 0);
+      updateHora();
+    }
+  }, 1000);
+}
 
 function startGame() {
+  level = $('#nivel option:selected').val();
+
   listaGeral = [];
   if (!isStart) {
     hourStart = Date.now();
     isStart = true;
-    duplicateAllItens(level);
+    updateHora();
+    listaGeral = duplicateAllItens(level);
+    listaGeral = embaralhar(listaGeral);
+    preencherTela();
+
     $('#btn-start-game').attr('disabled', 'true');
     $('#btn-finish-game').removeAttr('disabled');
   }
 }
 
+function preencherTela() {
+  let textHtml = '';
+  listaGeral.forEach((item, rowId) => {
+    let itemHtml = templateItem;
+    itemHtml = itemHtml.replace(/{name}/g, item.nome);
+    itemHtml = itemHtml.replace(/{rowId}/g, (rowId + 1));
+    textHtml += itemHtml;
+  });
+
+  $('.game-list').html(textHtml);
+}
+
 function finishGame() {
   listaGeral = [];
   isStart = false;
+  ptsGame = 0;
   $('#btn-start-game').removeAttr('disabled');
   $('#btn-finish-game').attr('disabled', 'true');
 }
@@ -35,11 +68,14 @@ function finishGame() {
 function duplicateAllItens(level) {
   let numbersRandom = [];
   let animaisRandom = [];
-  let column = 4;
-  let rows = 6;
 
-  for (let i = 0; i < level; i++) {
-    numbersRandom.push(getRandomArbitrary(1, animais.length));
+  for (let i = 1; i <= level; i++) {
+    let numberRandom = getRandomArbitrary(1, animais.length);
+    if (numbersRandom.includes(numberRandom)) {
+      i--;
+    } else {
+      numbersRandom.push(numberRandom);
+    }
   }
 
   animaisRandom = animais.filter((item, count) => {
@@ -52,19 +88,7 @@ function duplicateAllItens(level) {
     listaGeral.push(item);
   });
 
-  listaGeral = embaralhar(listaGeral);
-
-  let textHtml = '';
-  listaGeral.forEach((item, rowId) => {
-    let itemHtml = templateItem;
-
-    itemHtml = itemHtml.replace(/{name}/g, item.nome);
-    itemHtml = itemHtml.replace(/{rowId}/g, (rowId + 1));
-
-    textHtml += itemHtml;
-  });
-
-  $('.game-list').html(textHtml);
+  return listaGeral;
 }
 
 /**
@@ -98,6 +122,16 @@ function embaralhar(array) {
   return array;
 }
 
+function incrementPts(pts) {
+  ptsGame = ptsGame + pts;
+}
+
+function decrementPts(pts) {
+  if (ptsGame >= 0) {
+    ptsGame = ptsGame - pts;
+  }
+}
+
 /**
  * 
  * @param {*} animal 
@@ -117,13 +151,15 @@ function selectItem(animal, id) {
     } else {
       if (sameItens(selectedAnimal, selectFirstAnimal)) {
         showItem(selectFirstAnimal);
+        incrementPts(30);
         disableItem(selectedAnimal);
         if (isFinish()) {
-          hourEnd = Date.now();
+          finishGame();
           alert('Ganhou');
         }
         selectFirstAnimal = null;
       } else {
+        //decrementPts(10);
         setTimeout(() => {
           hideIten(selectedAnimal);
           hideIten(selectFirstAnimal);
@@ -153,7 +189,7 @@ function isDisabled(selectedAnimal) {
 function isFinish() {
   return (listaGeral.filter((item) => {
     return item.disable == false;
-  }).length === 0);
+  }).length == 0);
 }
 
 function sameItens(selectedAnimal, selectFirstAnimal) {
@@ -164,9 +200,13 @@ function sameItens(selectedAnimal, selectFirstAnimal) {
 }
 
 function hideIten(animal) {
-  $(`#${animal.name}-${animal.id}`).children().children().addClass('d-none');
+  if (animal) {
+    $(`#${animal.name}-${animal.id}`).children().children().addClass('d-none');
+  }
 }
 
 function showItem(animal) {
-  $(`#${animal.name}-${animal.id}`).children().children().removeClass('d-none');
+  if (animal) {
+    $(`#${animal.name}-${animal.id}`).children().children().removeClass('d-none');
+  }
 }
