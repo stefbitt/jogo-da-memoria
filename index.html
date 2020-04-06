@@ -9,7 +9,6 @@
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
   <link rel="stylesheet" href="src/style.css">
-
   <title>Jogo Da Memória</title>
 </head>
 
@@ -26,174 +25,33 @@
     </div>
   </div>
 
-  <div class="container game">
+  <div class="container row game">
 
-    <div class="row col-md-12 d-flex justify-content-center">
-      <!-- Row 1 -->
-      <div class="card col-md-2">
-        <div class="card-body">
-          <p class="card-text">Porco</p>
-        </div>
-      </div>
-
-      <div class="card col-md-2">
-        <div class="card-body">
-          <p class="card-text">Porco</p>
-        </div>
-      </div>
-
-      <div class="card col-md-2">
-        <div class="card-body">
-          <p class="card-text">Vaca</p>
-        </div>
-      </div>
-
-      <div class="card col-md-2">
-        <div class="card-body">
-          <p class="card-text">Vaca</p>
-        </div>
-      </div>
+    <div class="col-md-2">
+      <select name="nivel" class="form-control" id="nivel">
+        <option value="8" selected>Fácil</option>
+        <option value="12">Médio</option>
+        <option value="18">Díficil</option>
+      </select>
+      <spam>
+        <p>
+          <b>Tempo:</b>
+          <span id="time"></span>
+          <br>
+          <b>Pontuação:</b>
+          <span id="pts">0</span> pts
+        </p>
+      </spam>
     </div>
 
-    <!-- Row 2 -->
-    <div class="row col-md-12 d-flex justify-content-center">
-      <div class="card col-md-2">
-        <div class="card-body">
-          <p class="card-text">Boi</p>
-        </div>
-      </div>
-
-      <div class="card col-md-2">
-        <div class="card-body">
-          <p class="card-text">Boi</p>
-        </div>
-      </div>
-
-      <div class="card col-md-2">
-        <div class="card-body">
-          <p class="card-text">Macaco</p>
-        </div>
-      </div>
-
-      <div class="card col-md-2">
-        <div class="card-body">
-          <p class="card-text">Macaco</p>
-        </div>
-      </div>
+    <div class="row col-md-10 d-flex justify-content-center game-list">
     </div>
 
-    <!-- Row 3 -->
-    <div class="row col-md-12 d-flex justify-content-center">
-      <div class="card col-md-2" onclick="selectItem(1)">
-        <div class="card-body">
-          <p class="card-text">Cabra</p>
-        </div>
-      </div>
-
-      <div class="card col-md-2">
-        <div class="card-body" onclick="selectItem(1)">
-          <p class="card-text">Cabra</p>
-        </div>
-      </div>
-
-      <div class="card col-md-2">
-        <div class="card-body" onclick="selectItem(2)">
-          <p class="card-text">Cachorro</p>
-        </div>
-      </div>
-
-      <div class="card col-md-2">
-        <div class="card-body" onclick="selectItem(2)">
-          <p class="card-text">Cachorro</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- Row 4 -->
-    <div class="row col-md-12 d-flex justify-content-center">
-      <div class="card col-md-2">
-        <div class="card-body">
-          <p class="card-text">Gato</p>
-        </div>
-      </div>
-
-      <div class="card col-md-2">
-        <div class="card-body">
-          <p class="card-text">Gato</p>
-        </div>
-      </div>
-
-      <div class="card col-md-2">
-        <div class="card-body">
-          <p class="card-text">Leão</p>
-        </div>
-      </div>
-
-      <div class="card col-md-2">
-        <div class="card-body">
-          <p class="card-text">Leão</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- Row 5 -->
-    <div class="row col-md-12 d-flex justify-content-center">
-      <div class="card col-md-2">
-        <div class="card-body">
-          <p class="card-text">Papagaio</p>
-        </div>
-      </div>
-
-      <div class="card col-md-2">
-        <div class="card-body">
-          <p class="card-text">Papagaio</p>
-        </div>
-      </div>
-
-      <div class="card col-md-2">
-        <div class="card-body">
-          <p class="card-text">Cobra</p>
-        </div>
-      </div>
-
-      <div class="card col-md-2">
-        <div class="card-body">
-          <p class="card-text">Cobra</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- Row 6 -->
-    <div class="row col-md-12 d-flex justify-content-center">
-      <div class="card col-md-2">
-        <div class="card-body">
-          <p class="card-text">Lula</p>
-        </div>
-      </div>
-
-      <div class="card col-md-2">
-        <div class="card-body">
-          <p class="card-text">Lula</p>
-        </div>
-      </div>
-
-      <div class="card col-md-2">
-        <div class="card-body">
-          <p class="card-text">Peixe</p>
-        </div>
-      </div>
-
-      <div class="card col-md-2">
-        <div class="card-body">
-          <p class="card-text">Peixe</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="row btn-games d-flex justify-content-center">
+    <div class="row col-md-9 offset-md-3 btn-games d-flex justify-content-center">
       <button type="button" class="btn btn-success" onclick="startGame()" id="btn-start-game">Iniciar</button>
       <button type="button" class="btn btn-danger" onclick="finishGame()" id="btn-finish-game" disabled="true">Encerrar</button>
     </div>
+
   </div>
 
   <footer class="footer">
@@ -207,6 +65,8 @@
   <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+  <script src="https://momentjs.com/downloads/moment.js"></script>
+  <script src="src/animais.js"></script>
   <script src="src/main.js"></script>
 </body>
 
